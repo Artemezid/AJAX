@@ -25,28 +25,21 @@ const listNode = xmlDOM.querySelector("list");
 const studentsNode = listNode.querySelectorAll("student");
 
 const object = {
-    list: []
-};
-
-studentsNode.forEach(function(element) {
+    list: Array.from(studentsNode).map(function(element) {
     const studentName = element.querySelector("name");
     const studentFirstName = studentName.querySelector("first").textContent;
     const studentSecondName = studentName.querySelector("second").textContent;
     const studentAge = element.querySelector("age").textContent;
     const studentProf = element.querySelector("prof").textContent;
+    const langAttribute = studentName.getAttribute('lang')
 
-    const student = {
-        name: {
-            first: studentFirstName,
-            second: studentSecondName
-        },
+    return {
+        name:`${studentFirstName} ${studentSecondName}`,
         age: studentAge,
-        prof: studentProf
+        prof: studentProf,
+        lang: langAttribute
     };
-
-    object.list.push(student);
-});
-
+  })
+};
 console.log(object);
-
 

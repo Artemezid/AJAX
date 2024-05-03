@@ -4,12 +4,12 @@ const getButton = document.querySelector("button");
 const outputSpan = document.querySelector("span");
 const photosContainer = document.querySelector("div");
 
-getButton.addEventListener("click", submitButtonUse);
+getButton.addEventListener("click", getButtonUse);
 
 if (loadPhotosFromLocalStorage())
     write("Загружены последние просмотренные фото.");
 
-function submitButtonUse() {
+function getButtonUse() {
     const pageNumber = inputPageNumber.value;
     const limit = inputLimit.value;
 
@@ -29,7 +29,7 @@ function submitButtonUse() {
     write("Загружаю фото...");
 
     fetch(` https://jsonplaceholder.typicode.com/photos?_page=${pageNumber}&_limit=${limit}`)
-        .then((response) => response.json())
+        .then((response) => { return response.json(); })
         .then((json) => {
             loadPhotos(json);
             savePhotosToLocalStorage();
@@ -50,10 +50,10 @@ function loadPhotos(apiData) {
     apiData.forEach(item => {
         const cardBlock =     `<div>
                                 <img
-                                  src="${item.download_url}"
+                                  src="${item.thumbnailUrl}"
                                   style="width: 150px; margin-right: 30px"
                                 />
-                                <p>${item.author}</p>
+                                <p>${item.id}</p>
                               </div>`;
         cards += cardBlock;
     });
