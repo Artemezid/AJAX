@@ -6,10 +6,10 @@ const photosContainer = document.querySelector("div");
 getButton.addEventListener("click", getButtonUse);
 
 function getButtonUse() {
-    const value = input.value;
+    const value = document.querySelector('input').value;
 
     if (value >= 1 && value <= 10 && !isNaN(value)) {
-        useRequest("https://jsonplaceholder.typicode.com/photos?_limit=5" + value, loadPhotos);
+        useRequest(`https://jsonplaceholder.typicode.com/photos?_limit=${value}`, loadPhotos);
         write("Загружаю фото...");
     } else {
         write("Число вне диапазона от 1 до 10.");
@@ -43,16 +43,16 @@ function useRequest(url, callback) {
     xhr.send();
 };
 
-function loadPhotos(apiData) {
+function loadPhotos(value) {
     let cards = String();
 
-    apiData.forEach(item => {
+    value.forEach(item => {
         const cardBlock =     `<div>
                                 <img
-                                  src="${item.download_url}"
+                                  src="${item.thumbnailUrl}"
                                   style="width: 150px; margin-right: 30px"
                                 />
-                                <p>${item.author}</p>
+                                <p>${item.id}</p>
                               </div>`;
         cards += cardBlock;
     });
